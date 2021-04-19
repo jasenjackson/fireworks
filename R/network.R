@@ -145,12 +145,12 @@ findIPN <- function(nodes, edges, primaryNodes) {
       childNodes <- geneEdges %>% filter(target != gene) %>% select(target) %>% unlist
       for (childNode in childNodes) {
 
-        # if it's connected to anything else, the primary node isn't isolated (TODO: not *anything* else.. what if it connects back to sourceGene?)
+        # if it's connected to anything else, the primary node isn't isolated 
         if (edges %>% filter(target==childNode|source==childNode, source!=gene) %>% nrow > 0) {
           isIPN <- FALSE
           break}}
 
-      # if it passes all of these tests (or fails them?) it's an IPN.
+      # if it passes all of these tests (or fails them) it's an IPN.
       if (isIPN) {isolatedPrimaryNodes <- c(gene, isolatedPrimaryNodes)}
     }
   } # end for loop
@@ -211,7 +211,7 @@ getGeneInfo <- function(nodes, edges, geneinfo, achilles, context="pan_cancer") 
 }
 
 
-# (IN PROGRESS) build a network using pre-loaded correlation matrix (for pan-cancer analyses)
+# build a network using pre-loaded correlation matrix (for pan-cancer analyses)
 buildNetwork_local <- function(corrMat, sourceGenes, k1=10,
                          k2=0, pos1=TRUE, neg1=TRUE, secondOrder=FALSE,
                          pos2=TRUE, neg2=FALSE,
@@ -262,8 +262,6 @@ buildNetwork_local <- function(corrMat, sourceGenes, k1=10,
         nodes <- network.new[[1]]
         edges <- network.new[[2]]
 
-
-
       } # for (gene in sourceGenes)
     }) # withProgress
       edges <- edges %>% filter(source != target)
@@ -298,8 +296,6 @@ buildNetwork_local <- function(corrMat, sourceGenes, k1=10,
          edges <- network.new[[2]]
 
 
-
-
        }}) # for (gene in primaryGenes) / }) end w/ progress
 
       } # if (secondOrder)
@@ -324,7 +320,7 @@ buildNetwork_local <- function(corrMat, sourceGenes, k1=10,
 
 } # buildNetwork_local
 
-# (COMPLETE) build a network using SQL database connection (for lineage-specific analyses)
+# build a network using SQL database connection (for lineage-specific analyses)
 buildNetworkSQL2 <- function(table="pan_cancer_full", pool, sourceGenes, k1=10,
                          k2=0, pos1=TRUE, neg1=TRUE, secondOrder=FALSE,
                          pos2=TRUE, neg2=FALSE,
